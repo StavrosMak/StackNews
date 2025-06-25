@@ -44,7 +44,11 @@ const BannerSlider: React.FC<Props> = ({ newsList }) => {
       <button
         onClick={(e) => {
           e.preventDefault(); // prevent navigation on bookmark click
-          isFavorite(article) ? removeFavorite(article) : addFavorite(article);
+          if (isFavorite(article)) {
+            removeFavorite(article);
+          } else {
+            addFavorite(article);
+          }
         }}
         className={`absolute top-4 right-4 p-2 bg-black/50 rounded-full hover:bg-black/70 transition-colors z-20 ${large ? "" : "top-2 right-2"
           }`}
@@ -56,7 +60,8 @@ const BannerSlider: React.FC<Props> = ({ newsList }) => {
         )}
       </button>
 
-      <div className={`absolute bottom-0 left-0 p-${large ? "8" : "4"} z-20`}>
+      <div className={`absolute bottom-0 left-0 ${large ? "p-8" : "p-4"} z-20`}>
+
         <h2
           className={`${large ? "text-2xl sm:text-3xl lg:text-4xl" : "text-lg sm:text-xl"
             } font-bold leading-snug drop-shadow-lg text-cyan-400 line-clamp-2`}
@@ -84,18 +89,12 @@ const BannerSlider: React.FC<Props> = ({ newsList }) => {
     <div className="w-full">
       <div className="max-w-7xl mx-auto w-full pt-8 mt-8">
         <div className="grid md:grid-cols-2 sm:grid-cols-1 gap-6">
-          {/* Large left (newsList[0]) */}
-          <div className="row-span-2 col-span-1">{newsList[0] && renderCard(newsList[0], true)}</div>
-
-          {/* Small right top (newsList[2]) */}
-          <div className="row-span-1 col-span-1">{newsList[2] && renderCard(newsList[2])}</div>
-
-          {/* Large right bottom (newsList[1]) */}
-          <div className="row-span-2 col-span-1">{newsList[1] && renderCard(newsList[1])}</div>
-
-          {/* Small bottom right (newsList[3]) */}
-          <div className="row-span-1 col-span-1">{newsList[3] && renderCard(newsList[3])}</div>
+          <div className="row-span-2 col-span-1">{newsList[0] ? renderCard(newsList[0], true) : null}</div>
+          <div className="row-span-1 col-span-1">{newsList[2] ? renderCard(newsList[2]) : null}</div>
+          <div className="row-span-2 col-span-1">{newsList[1] ? renderCard(newsList[1]) : null}</div>
+          <div className="row-span-1 col-span-1">{newsList[3] ? renderCard(newsList[3]) : null}</div>
         </div>
+
       </div>
 
       {/* Theme toggle button */}
